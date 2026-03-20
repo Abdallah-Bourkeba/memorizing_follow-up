@@ -6,17 +6,17 @@
     <title>متابعة الحفظ</title>
     <style>
         :root {
-            --primary-color: #2E7D32; /* لون أخضر أنيق */
-            --secondary-color: #E8F5E9;
+            --primary-color: #2E7D32; /* أخضر غامق */
+            --secondary-color: #E8F5E9; /* أخضر فاتح جداً للبطاقات */
             --text-color: #333;
-            --bg-color: #f4f7f6;
+            --bg-color: #F9F9F9; /* خلفية أفتح */
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 10px; /* تقليل البادينغ العام للموبايل */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -24,59 +24,88 @@
         h1 {
             color: var(--primary-color);
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 2em;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
         }
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 500px; /* تضييق العرض قليلاً */
         }
         .card {
             background: white;
             border-radius: 12px;
-            padding: 25px;
+            padding: 15px; /* تقليل البادينغ */
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             border-top: 5px solid var(--primary-color);
         }
         .card h2 {
             margin-top: 0;
             color: var(--primary-color);
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: 1.3em;
+            margin-bottom: 10px;
         }
-        /* تصميم جدول العرض */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
+        
+        /* تصميم بطاقات عرض البيانات للموبايل */
+        .user-data-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-        }
-        th {
+        .user-data-header {
             background-color: var(--secondary-color);
             color: var(--primary-color);
             font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
-        td {
-            font-size: 1.1em;
+        .user-data-header span.label {
+            font-size: 0.9em;
         }
+        .user-item {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #f1f1f1;
+            padding-bottom: 3px;
+        }
+        .user-item .label {
+            font-weight: bold;
+            color: #666;
+            width: 80px; /* عرض ثابت للعنوان */
+        }
+        .user-item .value {
+            color: #333;
+            flex: 1;
+            text-align: right;
+        }
+        .user-item.last {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
         /* تصميم نموذج الإدخال */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: bold;
+            font-size: 0.9em;
         }
         select, input[type="text"], input[type="number"] {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 1em;
@@ -92,10 +121,10 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 15px 20px;
+            padding: 12px 15px;
             width: 100%;
             border-radius: 6px;
-            font-size: 1.2em;
+            font-size: 1.1em;
             cursor: pointer;
             transition: background 0.3s;
             font-weight: bold;
@@ -107,11 +136,13 @@
             text-align: center;
             color: #666;
             font-style: italic;
+            font-size: 0.9em;
         }
         #message {
-            margin-top: 15px;
+            margin-top: 10px;
             text-align: center;
             font-weight: bold;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -154,10 +185,39 @@
 
     <script>
         // *** ضع رابط الـ Web App الخاص بك هنا ***
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVItm1d3ygkqQzsqevcO1AurqTaOBNtFe0l1xxx6WFA7nRkBLfVbjpg5yfwm9iDfU0/exec'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzai-5Vi72tDGwIOHPiCp9UZm7gewf4MiZRc11mQxaxLKLj6lqJ34IMuPce81g2yP-Y/exec'; 
 
-        // دالة لجلب آخر تسجيل
-        async function fetchLastRecord() {
+        // دالة لعرض بيانات مستخدم في بطاقة
+        function createUserCard(userName, userData) {
+            if (!userData) {
+                return `
+                    <div class="user-data-card">
+                        <div class="user-data-header">${userName}</div>
+                        <p style="text-align:center; color:#888; margin:10px 0;">لا توجد بيانات مسجلة.</p>
+                    </div>
+                `;
+            }
+            return `
+                <div class="user-data-card">
+                    <div class="user-data-header">${userData.name}</div>
+                    <div class="user-item">
+                        <span class="label">التاريخ:</span>
+                        <span class="value">${userData.date}</span>
+                    </div>
+                    <div class="user-item">
+                        <span class="label">السورة:</span>
+                        <span class="value">${userData.surah}</span>
+                    </div>
+                    <div class="user-item last">
+                        <span class="label">الآية:</span>
+                        <span class="value">${userData.ayah}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // دالة لجلب آخر تسجيل لكل طالب
+        async function fetchLastRecords() {
             const displaySection = document.getElementById('display-section');
             if (SCRIPT_URL === 'ضع_الرابط_هنا') {
                 displaySection.innerHTML = '<p style="color:red; text-align:center;">يرجى وضع رابط Google Apps Script في الكود أولاً.</p>';
@@ -165,27 +225,20 @@
             }
 
             try {
-                const response = await fetch(SCRIPT_URL + "?action=getLast");
-                const data = await response.json();
+                // استدعاء الأكشن الجديد 'getLastByStudent'
+                const response = await fetch(SCRIPT_URL + "?action=getLastByStudent");
+                const result = await response.json();
 
-                if(data.status === "success" && data.data) {
-                    const row = data.data;
-                    displaySection.innerHTML = `
-                        <table>
-                            <tr>
-                                <th>التاريخ</th>
-                                <th>الاسم</th>
-                                <th>السورة</th>
-                                <th>الآية</th>
-                            </tr>
-                            <tr>
-                                <td>${row.date}</td>
-                                <td>${row.name}</td>
-                                <td>${row.surah}</td>
-                                <td>${row.ayah}</td>
-                            </tr>
-                        </table>
-                    `;
+                if(result.status === "success") {
+                    let htmlContent = '';
+                    
+                    // توليد بطاقة عبدالله
+                    htmlContent += createUserCard("عبدالله محمد", result.data.abdullah);
+                    
+                    // توليد بطاقة عبدالرحمن
+                    htmlContent += createUserCard("عبدالرحمن وائل", result.data.abdulrahman);
+                    
+                    displaySection.innerHTML = htmlContent;
                 } else {
                     displaySection.innerHTML = '<p style="text-align:center;">لا توجد بيانات مسجلة حتى الآن.</p>';
                 }
@@ -222,8 +275,8 @@
                     msg.style.color = "green";
                     msg.innerText = "تم تسجيل البيانات بنجاح!";
                     document.getElementById('record-form').reset();
-                    // تحديث واجهة العرض بآخر ما تم إدخاله
-                    fetchLastRecord();
+                    // تحديث واجهة العرض بآخر ما تم إدخاله للطلاب
+                    fetchLastRecords();
                 } else {
                     throw new Error("فشل الحفظ");
                 }
@@ -238,7 +291,8 @@
         });
 
         // تشغيل دالة الجلب عند فتح الصفحة
-        fetchLastRecord();
+        fetchLastRecords();
     </script>
 </body>
 </html>
+
