@@ -177,15 +177,33 @@
                     <label for="ayah">رقم الآية:</label>
                     <input type="number" id="ayah" name="ayah" placeholder="مثال: 286" min="1" required>
                 </div>
-                <button type="submit" id="submit-btn">إرسال</button>
+            <button type="submit" id="submit-btn">إرسال</button>
                 <div id="message"></div>
             </form>
         </div>
     </div>
-
     <script>
         // *** ضع رابط الـ Web App الخاص بك هنا ***
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzai-5Vi72tDGwIOHPiCp9UZm7gewf4MiZRc11mQxaxLKLj6lqJ34IMuPce81g2yP-Y/exec'; 
+
+        // دالة جديدة لتنسيق التاريخ والوقت
+        function formatDateTime(dateString) {
+            const d = new Date(dateString);
+            if (isNaN(d)) return dateString; 
+            
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            
+            let hours = d.getHours();
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'م' : 'ص';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            
+            return `<span dir="ltr">${year}-${month}-${day}</span> | ${hours}:${minutes} ${ampm}`;
+        }
 
         // دالة لعرض بيانات مستخدم في بطاقة
         function createUserCard(userName, userData) {
@@ -197,12 +215,16 @@
                     </div>
                 `;
             }
+
+            // تطبيق التنسيق على التاريخ هنا
+            const prettyDate = formatDateTime(userData.date);
+
             return `
                 <div class="user-data-card">
                     <div class="user-data-header">${userData.name}</div>
                     <div class="user-item">
                         <span class="label">التاريخ:</span>
-                        <span class="value">${userData.date}</span>
+                        <span class="value">${prettyDate}</span>
                     </div>
                     <div class="user-item">
                         <span class="label">السورة:</span>
@@ -225,19 +247,13 @@
             }
 
             try {
-                // استدعاء الأكشن الجديد 'getLastByStudent'
                 const response = await fetch(SCRIPT_URL + "?action=getLastByStudent");
                 const result = await response.json();
 
                 if(result.status === "success") {
                     let htmlContent = '';
-                    
-                    // توليد بطاقة عبدالله
                     htmlContent += createUserCard("عبدالله محمد", result.data.abdullah);
-                    
-                    // توليد بطاقة عبدالرحمن
                     htmlContent += createUserCard("عبدالرحمن وائل", result.data.abdulrahman);
-                    
                     displaySection.innerHTML = htmlContent;
                 } else {
                     displaySection.innerHTML = '<p style="text-align:center;">لا توجد بيانات مسجلة حتى الآن.</p>';
@@ -275,7 +291,6 @@
                     msg.style.color = "green";
                     msg.innerText = "تم تسجيل البيانات بنجاح!";
                     document.getElementById('record-form').reset();
-                    // تحديث واجهة العرض بآخر ما تم إدخاله للطلاب
                     fetchLastRecords();
                 } else {
                     throw new Error("فشل الحفظ");
@@ -293,6 +308,7 @@
         // تشغيل دالة الجلب عند فتح الصفحة
         fetchLastRecords();
     </script>
+    
 </body>
 </html>
 
