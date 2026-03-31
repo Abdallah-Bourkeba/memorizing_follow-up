@@ -1,318 +1,281 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متابعة الحفظ</title>
-    <style>
-        :root {
-            --primary-color: #2E7D32; /* أخضر غامق */
-            --secondary-color: #E8F5E9; /* أخضر فاتح جداً للبطاقات */
-            --text-color: #333;
-            --bg-color: #F9F9F9; /* خلفية أفتح */
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 10px; /* تقليل البادينغ العام للموبايل */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 2em;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 5px;
-        }
-        .container {
-            width: 100%;
-            max-width: 500px; /* تضييق العرض قليلاً */
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 15px; /* تقليل البادينغ */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-            border-top: 5px solid var(--primary-color);
-        }
-        .card h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-        
-        /* تصميم بطاقات عرض البيانات للموبايل */
-        .user-data-card {
-            background-color: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-        }
-        .user-data-header {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        .user-data-header span.label {
-            font-size: 0.9em;
-        }
-        .user-item {
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #f1f1f1;
-            padding-bottom: 3px;
-        }
-        .user-item .label {
-            font-weight: bold;
-            color: #666;
-            width: 80px; /* عرض ثابت للعنوان */
-        }
-        .user-item .value {
-            color: #333;
-            flex: 1;
-            text-align: right;
-        }
-        .user-item.last {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
 
-        /* تصميم نموذج الإدخال */
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-        select, input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1em;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-        select:focus, input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
-        }
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 15px;
-            width: 100%;
-            border-radius: 6px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #1b5e20;
-        }
-        .loader {
-            text-align: center;
-            color: #666;
-            font-style: italic;
-            font-size: 0.9em;
-        }
-        #message {
-            margin-top: 10px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-    </style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متابعة الحفظ المتقدمة</title>
+  <style>
+    :root {
+      --primary-color: #2E7D32;
+      --secondary-color: #E8F5E9;
+      --bg-color: #F4F7F6;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 1.8em;
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 5px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 15px;
+      border-top: 5px solid var(--primary-color);
+    }
+
+    .card h2 {
+      margin: 0 0 15px 0;
+      color: var(--primary-color);
+      font-size: 1.3em;
+      text-align: center;
+    }
+
+    /* تصميم عرض الحالات المختلفة لكل طالب */
+    .student-block {
+      margin-bottom: 20px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .student-name-header {
+      background: var(--primary-color);
+      color: white;
+      padding: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .type-row {
+      padding: 10px;
+      border-bottom: 1px solid #f0f0f0;
+      background: white;
+    }
+
+    .type-row:last-child {
+      border-bottom: none;
+    }
+
+    .type-label {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .label-hifz {
+      background: #E3F2FD;
+      color: #1565C0;
+    }
+
+    .label-review {
+      background: #FFF3E0;
+      color: #E65100;
+    }
+
+    .label-weekly {
+      background: #F3E5F5;
+      color: #7B1FA2;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .data-date {
+      grid-column: span 2;
+      font-size: 0.8em;
+      color: #999;
+      border-bottom: 1px dashed #eee;
+      padding-bottom: 3px;
+      margin-bottom: 3px;
+    }
+
+    /* النموذج */
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
 
-    <h1>متابعة الحفظ</h1>
+  <h1>متابعة الحفظ</h1>
 
-    <div class="container">
-        <div class="card">
-            <h2>أحدث تسجيل</h2>
-            <div id="display-section">
-                <p class="loader">جاري جلب البيانات...</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>تسجيل ورد جديد</h2>
-            <form id="record-form">
-                <div class="form-group">
-                    <label for="name">الاسم:</label>
-                    <select id="name" name="name" required>
-                        <option value="" disabled selected>اختر الاسم</option>
-                        <option value="عبدالله محمد">عبدالله محمد</option>
-                        <option value="عبدالرحمن وائل">عبدالرحمن وائل</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="surah">اسم السورة:</label>
-                    <input type="text" id="surah" name="surah" placeholder="مثال: البقرة" required>
-                </div>
-                <div class="form-group">
-                    <label for="ayah">رقم الآية:</label>
-                    <input type="number" id="ayah" name="ayah" placeholder="مثال: 286" min="1" required>
-                </div>
-            <button type="submit" id="submit-btn">إرسال</button>
-                <div id="message"></div>
-            </form>
-        </div>
+  <div class="container">
+    <div class="card">
+      <h2>أحدث الإنجازات</h2>
+      <div id="display-section">
+        <p style="text-align:center;">جاري التحميل...</p>
+      </div>
     </div>
-    <script>
-        // *** ضع رابط الـ Web App الخاص بك هنا ***
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzai-5Vi72tDGwIOHPiCp9UZm7gewf4MiZRc11mQxaxLKLj6lqJ34IMuPce81g2yP-Y/exec'; 
-        // دالة جديدة لتنسيق التاريخ والوقت مع إضافة اليوم
-        function formatDateTime(dateString) {
-            const d = new Date(dateString);
-            if (isNaN(d)) return dateString; 
-            
-            // أسماء الأيام بالعربي
-            const daysArabic = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-            const dayName = daysArabic[d.getDay()];
 
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            
-            let hours = d.getHours();
-            const minutes = String(d.getMinutes()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'م' : 'ص';
-            
-            hours = hours % 12;
-            hours = hours ? hours : 12; 
-            
-            // تنسيق الشكل النهائي مع تلوين اليوم وتمييزه
-            return `<span style="color: var(--primary-color); font-weight: bold; margin-left: 5px;">${dayName}</span> | <span dir="ltr" style="color: #444;">${year}-${month}-${day}</span> | <span style="color: #777; font-size: 0.9em;">${hours}:${minutes} ${ampm}</span>`;
+    <div class="card">
+      <h2>تسجيل جديد</h2>
+      <form id="record-form">
+        <div class="form-group">
+          <label>الاسم:</label>
+          <select id="name" required>
+            <option value="" disabled selected>اختر الاسم</option>
+            <option value="عبدالله محمد">عبدالله محمد</option>
+            <option value="عبدالرحمن وائل">عبدالرحمن وائل</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>نوع الورد:</label>
+          <select id="type" required>
+            <option value="حفظ جديد">حفظ جديد</option>
+            <option value="مراجعة ماضي">مراجعة ماضي</option>
+            <option value="مراجعة أسبوعية">مراجعة أسبوعية</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>اسم السورة:</label>
+          <input type="text" id="surah" placeholder="مثال: البقرة" required>
+        </div>
+        <div class="form-group">
+          <label>رقم الآية:</label>
+          <input type="number" id="ayah" placeholder="آخر آية وصلتها" required>
+        </div>
+        <button type="submit" id="submit-btn">إرسال البيانات</button>
+        <div id="message"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxihCF8vLMIvVqSZSpsCLM1M6Uf8rkG4POcXDHH_sQjGl31DDqkAhWGHVPV43RKDwM/exec';
+
+    function formatDateTime(dateString) {
+      const d = new Date(dateString);
+      if (isNaN(d)) return "---";
+      const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+      const ampm = d.getHours() >= 12 ? 'م' : 'ص';
+      let h = d.getHours() % 12 || 12;
+      return `${days[d.getDay()]} | ${d.toLocaleDateString('en-GB')} | ${h}:${String(d.getMinutes()).padStart(2, '0')} ${ampm}`;
+    }
+
+    function createTypeRow(label, data, colorClass) {
+      return `
+                <div class="type-row">
+                    <span class="type-label ${colorClass}">${label}</span>
+                    ${data ? `
+                        <div class="data-date">${formatDateTime(data.date)}</div>
+                        <div class="data-grid">
+                            <span><b>السورة:</b> ${data.surah}</span>
+                            <span><b>الآية:</b> ${data.ayah}</span>
+                        </div>
+                    ` : `<div style="color:#ccc; font-size:0.8em;">لا توجد بيانات</div>`}
+                </div>`;
+    }
+
+    async function fetchLastRecords() {
+      try {
+        const response = await fetch(SCRIPT_URL + "?action=getLastByStudent");
+        const res = await response.json();
+        if (res.status === "success") {
+          let html = '';
+          const students = { "عبدالله محمد": res.data.abdullah, "عبدالرحمن وائل": res.data.abdulrahman };
+
+          for (let name in students) {
+            html += `<div class="student-block">
+                            <div class="student-name-header">${name}</div>
+                            ${createTypeRow("حفظ جديد", students[name]["حفظ جديد"], "label-hifz")}
+                            ${createTypeRow("مراجعة ماضي", students[name]["مراجعة ماضي"], "label-review")}
+                            ${createTypeRow("مراجعة أسبوعية", students[name]["مراجعة أسبوعية"], "label-weekly")}
+                        </div>`;
+          }
+          document.getElementById('display-section').innerHTML = html;
         }
+      } catch (e) { document.getElementById('display-section').innerHTML = "خطأ في الاتصال"; }
+    }
 
-        // دالة لعرض بيانات مستخدم في بطاقة
-        function createUserCard(userName, userData) {
-            if (!userData) {
-                return `
-                    <div class="user-data-card">
-                        <div class="user-data-header">${userName}</div>
-                        <p style="text-align:center; color:#888; margin:10px 0;">لا توجد بيانات مسجلة.</p>
-                    </div>
-                `;
-            }
+    document.getElementById('record-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true; btn.innerText = "جاري الحفظ...";
 
-            // تطبيق التنسيق على التاريخ هنا
-            const prettyDate = formatDateTime(userData.date);
+      const formData = new FormData();
+      formData.append('name', document.getElementById('name').value);
+      formData.append('type', document.getElementById('type').value);
+      formData.append('surah', document.getElementById('surah').value);
+      formData.append('ayah', document.getElementById('ayah').value);
 
-            return `
-                <div class="user-data-card">
-                    <div class="user-data-header">${userData.name}</div>
-                    <div class="user-item">
-                        <span class="label">التاريخ:</span>
-                        <span class="value">${prettyDate}</span>
-                    </div>
-                    <div class="user-item">
-                        <span class="label">السورة:</span>
-                        <span class="value">${userData.surah}</span>
-                    </div>
-                    <div class="user-item last">
-                        <span class="label">الآية:</span>
-                        <span class="value">${userData.ayah}</span>
-                    </div>
-                </div>
-            `;
+      try {
+        const r = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+        const res = await r.json();
+        if (res.status === "success") {
+          document.getElementById('message').innerHTML = "✅ تم الحفظ";
+          document.getElementById('record-form').reset();
+          fetchLastRecords();
         }
+      } catch (e) { document.getElementById('message').innerText = "❌ فشل الاتصال"; }
+      btn.disabled = false; btn.innerText = "إرسال البيانات";
+    });
 
-        // دالة لجلب آخر تسجيل لكل طالب
-        async function fetchLastRecords() {
-            const displaySection = document.getElementById('display-section');
-            if (SCRIPT_URL === 'ضع_الرابط_هنا') {
-                displaySection.innerHTML = '<p style="color:red; text-align:center;">يرجى وضع رابط Google Apps Script في الكود أولاً.</p>';
-                return;
-            }
-
-            try {
-                const response = await fetch(SCRIPT_URL + "?action=getLastByStudent");
-                const result = await response.json();
-
-                if(result.status === "success") {
-                    let htmlContent = '';
-                    htmlContent += createUserCard("عبدالله محمد", result.data.abdullah);
-                    htmlContent += createUserCard("عبدالرحمن وائل", result.data.abdulrahman);
-                    displaySection.innerHTML = htmlContent;
-                } else {
-                    displaySection.innerHTML = '<p style="text-align:center;">لا توجد بيانات مسجلة حتى الآن.</p>';
-                }
-            } catch (error) {
-                displaySection.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في جلب البيانات.</p>';
-                console.error('Error:', error);
-            }
-        }
-
-        // إرسال البيانات
-        document.getElementById('record-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            const msg = document.getElementById('message');
-            
-            btn.disabled = true;
-            btn.innerText = 'جاري الإرسال...';
-            msg.innerText = '';
-
-            const formData = new FormData();
-            formData.append('action', 'add');
-            formData.append('name', document.getElementById('name').value);
-            formData.append('surah', document.getElementById('surah').value);
-            formData.append('ayah', document.getElementById('ayah').value);
-
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-                const result = await response.json();
-
-                if(result.status === "success") {
-                    msg.style.color = "green";
-                    msg.innerText = "تم تسجيل البيانات بنجاح!";
-                    document.getElementById('record-form').reset();
-                    fetchLastRecords();
-                } else {
-                    throw new Error("فشل الحفظ");
-                }
-            } catch (error) {
-                msg.style.color = "red";
-                msg.innerText = "حدث خطأ أثناء الإرسال. تأكد من الاتصال بالإنترنت.";
-                console.error('Error!', error.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = 'إرسال';
-            }
-        });
-
-        // تشغيل دالة الجلب عند فتح الصفحة
-        fetchLastRecords();
-    </script>
-    
+    fetchLastRecords();
+  </script>
 </body>
-</html>
 
+</html>
